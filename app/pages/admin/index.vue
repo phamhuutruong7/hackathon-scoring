@@ -2,6 +2,7 @@
 definePageMeta({ middleware: 'admin' })
 
 const tabs = [
+  { key: 'users', label: 'Người dùng', icon: 'i-lucide-user-cog' },
   { key: 'teams', label: 'Đội', icon: 'i-lucide-users' },
   { key: 'judges', label: 'Giám khảo', icon: 'i-lucide-gavel' },
   { key: 'assign', label: 'Vòng 1: Phân đội', icon: 'i-lucide-link' },
@@ -10,7 +11,7 @@ const tabs = [
   { key: 'results', label: 'Kết quả', icon: 'i-lucide-trophy' },
 ] as const
 
-const active = ref<(typeof tabs)[number]['key']>('teams')
+const active = ref<(typeof tabs)[number]['key']>('users')
 </script>
 
 <template>
@@ -32,7 +33,8 @@ const active = ref<(typeof tabs)[number]['key']>('teams')
       </button>
     </div>
 
-    <AdminTeams v-if="active === 'teams'" />
+    <AdminUsers v-if="active === 'users'" />
+    <AdminTeams v-else-if="active === 'teams'" />
     <AdminJudges v-else-if="active === 'judges'" />
     <AdminAssignments v-else-if="active === 'assign'" />
     <AdminRoundTeams v-else-if="active === 'rounds-teams'" />
