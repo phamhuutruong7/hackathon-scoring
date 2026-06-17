@@ -141,13 +141,13 @@ async function save(submit: boolean) {
           <div v-for="(c, i) in CRITERIA" :key="c.key">
             <div class="flex items-center justify-between mb-1">
               <label class="text-sm font-medium">{{ i + 1 }}. {{ c.label }}</label>
-              <span class="text-xs text-[var(--ui-text-muted)]">0–100 · 20%</span>
+              <span class="text-xs text-[var(--ui-text-muted)]">0–{{ CRITERION_MAX }} · 20%</span>
             </div>
             <div class="flex items-center gap-3">
               <USlider
                 v-model="form[c.key]"
                 :min="0"
-                :max="100"
+                :max="CRITERION_MAX"
                 :step="1"
                 :disabled="!editable"
                 class="flex-1"
@@ -156,7 +156,7 @@ async function save(submit: boolean) {
                 v-model.number="form[c.key]"
                 type="number"
                 :min="0"
-                :max="100"
+                :max="CRITERION_MAX"
                 :disabled="!editable"
                 class="w-20"
               />

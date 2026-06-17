@@ -1,7 +1,3 @@
-// The 5 scoring criteria. Each is scored 0–100 and weighted 20%,
-// so the weighted total equals the simple average of the five.
-// A team may additionally receive a bonus of up to +10 points.
-
 export interface Criterion {
   key: 'c1' | 'c2' | 'c3' | 'c4' | 'c5'
   label: string
@@ -16,7 +12,8 @@ export const CRITERIA: Criterion[] = [
   { key: 'c5', label: 'Thuyết trình & trả lời Q&A' },
 ]
 
-export const CRITERION_MAX = 100
+// Each criterion: 0–20. Total criteria max = 5×20 = 100. Final max = 110 with bonus.
+export const CRITERION_MAX = 20
 export const BONUS_MAX = 10
 
 export interface ScoreParts {
@@ -28,11 +25,10 @@ export interface ScoreParts {
   bonus: number
 }
 
-// Final score = average of the 5 criteria (each 0–100) + bonus (0–10).
+// Final score = sum of 5 criteria (each 0–20) + bonus (0–10). Max = 110.
 export function computeFinal(s: Partial<ScoreParts>): number {
-  const avg =
-    ((s.c1 ?? 0) + (s.c2 ?? 0) + (s.c3 ?? 0) + (s.c4 ?? 0) + (s.c5 ?? 0)) / 5
-  return Math.round((avg + (s.bonus ?? 0)) * 100) / 100
+  const sum = (s.c1 ?? 0) + (s.c2 ?? 0) + (s.c3 ?? 0) + (s.c4 ?? 0) + (s.c5 ?? 0)
+  return Math.round((sum + (s.bonus ?? 0)) * 100) / 100
 }
 
 export const ROUNDS = [

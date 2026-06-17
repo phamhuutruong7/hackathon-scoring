@@ -3,14 +3,18 @@ const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 const { profile, isAdmin } = useProfile()
 const route = useRoute()
+const colorMode = useColorMode()
 
 async function logout() {
   await supabase.auth.signOut()
   await navigateTo('/login')
 }
 
-// Hide chrome on the login page
 const bare = computed(() => route.path === '/login')
+const isDark = computed(() => colorMode.value === 'dark')
+function toggleColorMode() {
+  colorMode.preference = isDark.value ? 'light' : 'dark'
+}
 </script>
 
 <template>
@@ -42,6 +46,14 @@ const bare = computed(() => route.path === '/login')
           >
             <span class="hidden sm:inline">Admin</span>
           </UButton>
+          <UButton
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            :icon="isDark ? 'i-lucide-sun' : 'i-lucide-moon'"
+            :aria-label="isDark ? 'Chuyển sang sáng' : 'Chuyển sang tối'"
+            @click="toggleColorMode"
+          />
           <UButton
             variant="ghost"
             color="error"
