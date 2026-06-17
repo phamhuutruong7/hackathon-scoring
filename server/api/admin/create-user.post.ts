@@ -1,5 +1,3 @@
-import { useSupabaseAdmin } from '~/server/utils/supabaseAdmin'
-
 export default defineEventHandler(async (event) => {
   const admin = useSupabaseAdmin()
 
