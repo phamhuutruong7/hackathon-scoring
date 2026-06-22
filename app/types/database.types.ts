@@ -71,14 +71,14 @@ export type Database = {
       v_round_rankings: {
         Row: {
           avg_score: number | null; judge_count: number | null; rank: number | null
-          round_id: number | null; team_id: string | null; team_name: string | null
+          round_id: number | null; sum_score: number | null; team_id: string | null; team_name: string | null
         }
         Relationships: []
       }
       v_round_results: {
         Row: {
           avg_score: number | null; judge_count: number | null
-          round_id: number | null; team_id: string | null; team_name: string | null
+          round_id: number | null; sum_score: number | null; team_id: string | null; team_name: string | null
         }
         Relationships: []
       }
