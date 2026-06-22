@@ -165,7 +165,7 @@ async function save(submit: boolean) {
 
           <div class="pt-2 border-t border-[var(--ui-border)]">
             <div class="flex items-center justify-between mb-1">
-              <label class="text-sm font-medium">Điểm thưởng (tùy chọn)</label>
+              <label class="text-sm font-medium">Khả năng saving token của AI Agent (tùy chọn)</label>
               <span class="text-xs text-[var(--ui-text-muted)]">0–10</span>
             </div>
             <div class="flex items-center gap-3">

@@ -6,6 +6,7 @@ const supabase = useSupabaseClient<Database>()
 interface RankRow {
   rank: number | null
   team_name: string | null
+  sum_score: number | null
   avg_score: number | null
   judge_count: number | null
   team_id: string | null
@@ -25,7 +26,7 @@ async function load() {
   pending.value = true
   const { data } = await supabase
     .from('v_round_rankings')
-    .select('rank, team_name, avg_score, judge_count, team_id')
+    .select('rank, team_name, sum_score, avg_score, judge_count, team_id')
     .eq('round_id', round.value)
     .order('rank', { ascending: true })
   rows.value = data ?? []
@@ -35,10 +36,11 @@ onMounted(load)
 watch(round, load)
 
 function exportCsv() {
-  const header = ['Hạng', 'Đội', 'Điểm trung bình', 'Số giám khảo']
+  const header = ['Hạng', 'Đội', 'Tổng điểm', 'Điểm trung bình', 'Số giám khảo']
   const lines = rows.value.map((r) => [
     r.rank ?? '',
     `"${(r.team_name ?? '').replace(/"/g, '""')}"`,
+    r.sum_score ?? '',
     r.avg_score ?? '',
     r.judge_count ?? 0,
   ].join(','))
@@ -78,6 +80,7 @@ function exportCsv() {
           <tr class="text-left text-[var(--ui-text-muted)] border-b border-[var(--ui-border)]">
             <th class="py-2 pr-4 font-medium w-16">Hạng</th>
             <th class="py-2 pr-4 font-medium">Đội</th>
+            <th class="py-2 px-2 font-medium text-right">Tổng điểm</th>
             <th class="py-2 px-2 font-medium text-right">Điểm TB</th>
             <th class="py-2 px-2 font-medium text-right">Số GK</th>
           </tr>
@@ -94,6 +97,9 @@ function exportCsv() {
               <span v-else class="text-[var(--ui-text-dimmed)]">–</span>
             </td>
             <td class="py-2 pr-4">{{ r.team_name }}</td>
+            <td class="py-2 px-2 text-right font-semibold tabular-nums">
+              {{ r.sum_score != null ? Number(r.sum_score).toFixed(2) : '—' }}
+            </td>
             <td class="py-2 px-2 text-right font-semibold tabular-nums">
               {{ r.avg_score != null ? Number(r.avg_score).toFixed(2) : '—' }}
             </td>
