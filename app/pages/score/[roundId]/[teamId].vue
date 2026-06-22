@@ -67,6 +67,23 @@ function clamp(v: number, max: number) {
   return Math.min(max, Math.max(0, v))
 }
 
+// Snap any value above the allowed max down to the max as the judge types.
+// (negatives / empty values are floored to 0 on save by clamp())
+watch(
+  () => CRITERIA.map((c) => form[c.key]),
+  (vals) => {
+    CRITERIA.forEach((c, i) => {
+      if (vals[i]! > CRITERION_MAX) form[c.key] = CRITERION_MAX
+    })
+  },
+)
+watch(
+  () => form.bonus,
+  (v) => {
+    if (v > BONUS_MAX) form.bonus = BONUS_MAX
+  },
+)
+
 async function save(submit: boolean) {
   if (!userId.value) return
   // Normalize ranges before sending
