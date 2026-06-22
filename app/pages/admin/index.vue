@@ -9,6 +9,7 @@ const tabs = [
   { key: 'rounds-teams', label: 'Vòng 2–3: Chọn đội', icon: 'i-lucide-filter' },
   { key: 'status', label: 'Trạng thái vòng', icon: 'i-lucide-toggle-right' },
   { key: 'results', label: 'Kết quả', icon: 'i-lucide-trophy' },
+  { key: 'feedback', label: 'Phản hồi', icon: 'i-lucide-message-square-text' },
 ] as const
 
 const active = ref<(typeof tabs)[number]['key']>('users')
@@ -40,5 +41,6 @@ const active = ref<(typeof tabs)[number]['key']>('users')
     <AdminRoundTeams v-else-if="active === 'rounds-teams'" />
     <AdminRounds v-else-if="active === 'status'" />
     <AdminResults v-else-if="active === 'results'" />
+    <AdminFeedback v-else-if="active === 'feedback'" />
   </div>
 </template>

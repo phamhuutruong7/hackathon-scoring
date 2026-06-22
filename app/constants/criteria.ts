@@ -16,6 +16,9 @@ export const CRITERIA: Criterion[] = [
 export const CRITERION_MAX = 20
 export const BONUS_MAX = 10
 
+// Optional bonus criterion shown after the 5 main criteria.
+export const BONUS_LABEL = 'Khả năng saving token của AI Agent'
+
 export interface ScoreParts {
   c1: number
   c2: number

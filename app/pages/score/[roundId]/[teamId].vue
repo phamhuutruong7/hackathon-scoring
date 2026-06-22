@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Database } from '~/types/database.types'
-import { CRITERIA, BONUS_MAX, CRITERION_MAX, computeFinal } from '~/constants/criteria'
+import { CRITERIA, BONUS_MAX, BONUS_LABEL, CRITERION_MAX, computeFinal } from '~/constants/criteria'
 
 const supabase = useSupabaseClient<Database>()
 const userId = useUserId()
@@ -165,7 +165,7 @@ async function save(submit: boolean) {
 
           <div class="pt-2 border-t border-[var(--ui-border)]">
             <div class="flex items-center justify-between mb-1">
-              <label class="text-sm font-medium">Khả năng saving token của AI Agent (tùy chọn)</label>
+              <label class="text-sm font-medium">{{ BONUS_LABEL }} (tùy chọn)</label>
               <span class="text-xs text-[var(--ui-text-muted)]">0–10</span>
             </div>
             <div class="flex items-center gap-3">
