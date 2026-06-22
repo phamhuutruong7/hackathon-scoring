@@ -29,22 +29,15 @@ async function load() {
     .single()
   round.value = r
 
-  // Determine the set of teams this judge handles in this round
-  let teamList: { id: string; name: string }[] = []
-  if (roundId === 1) {
-    const { data } = await supabase
-      .from('assignments')
-      .select('teams(id, name)')
-      .eq('round_id', 1)
-      .eq('judge_id', uid)
-    teamList = (data ?? []).map((row: any) => row.teams).filter(Boolean)
-  } else {
-    const { data } = await supabase
-      .from('round_teams')
-      .select('teams(id, name)')
-      .eq('round_id', roundId)
-    teamList = (data ?? []).map((row: any) => row.teams).filter(Boolean)
-  }
+  // Teams this judge is assigned to score in this round (all rounds use assignments)
+  const { data: assigned } = await supabase
+    .from('assignments')
+    .select('teams(id, name)')
+    .eq('round_id', roundId)
+    .eq('judge_id', uid)
+  const teamList: { id: string; name: string }[] = (assigned ?? [])
+    .map((row: any) => row.teams)
+    .filter(Boolean)
 
   // My existing scores for this round
   const { data: myScores } = await supabase
