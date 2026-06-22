@@ -32,21 +32,13 @@ async function load() {
     const r = (row as any).rounds
     if (!r) continue
 
-    let total = 0
-    if (r.id === 1) {
-      const { count } = await supabase
-        .from('assignments')
-        .select('*', { count: 'exact', head: true })
-        .eq('round_id', 1)
-        .eq('judge_id', uid)
-      total = count ?? 0
-    } else {
-      const { count } = await supabase
-        .from('round_teams')
-        .select('*', { count: 'exact', head: true })
-        .eq('round_id', r.id)
-      total = count ?? 0
-    }
+    // Teams assigned to this judge in the round (all rounds use assignments)
+    const { count } = await supabase
+      .from('assignments')
+      .select('*', { count: 'exact', head: true })
+      .eq('round_id', r.id)
+      .eq('judge_id', uid)
+    const total = count ?? 0
 
     const { count: done } = await supabase
       .from('scores')
