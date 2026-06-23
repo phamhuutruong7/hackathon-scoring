@@ -55,7 +55,7 @@ async function submit() {
           <UInput
             v-model="identifier"
             autocomplete="username"
-            placeholder="ban@fhn.vn hoặc TruongPH2"
+            placeholder="Your account"
             class="w-full"
           />
         </UFormField>
